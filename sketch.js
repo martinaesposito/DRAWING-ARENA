@@ -144,7 +144,6 @@ function draw() {
 	//ALERT COMPUTER
 	if (mode== 2){
 
-		push()
 		cnv= createCanvas(windowWidth, windowHeight);
 		background("black")
 
@@ -160,9 +159,6 @@ function draw() {
 		alert2.style('font-size', '20px')
 		alert3.style('font-size', '20px')
 
-		noLoop()
-
-		pop()
 	}
 
 
