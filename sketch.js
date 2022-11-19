@@ -13,6 +13,9 @@ let pointsDr
 let pointsAr
 
 //SCHERMATA DI GIOCO
+
+let alert
+
 let worldbounds
 let xB
 let yB
@@ -82,7 +85,19 @@ function draw() {
 	}
 
 	//SCHERMATA DI GIOCO
-	else if(mode== 1){
+	if (mode== 2){
+
+		cnv= createCanvas(windowWidth, windowHeight);
+		background("black")
+
+		let alert1 = createP("Oh no! Seems you are trying to access the game from your computer")
+		let alert2 = createP("open the link from your phone to play")
+		
+		alert1.position(0, windowHeight*8/18)
+		alert2.position(0, windowHeight*9/18)
+	}
+	else if(mode== 1){ 
+
 		
 		frameRate(60)
 
@@ -182,13 +197,15 @@ function gameTitle(){
 	
 	frameRate(3)
 
+	//definisco una dimensione degli elementi per lo schermo del computer
 	if (windowWidth > 1000 && windowHeight > 500){
 		pointsDr = font.textToPoints('DRAWING', windowWidth*2/8, windowHeight*7/18, 160);
 		pointsAr = font.textToPoints('ARENA',  windowWidth*2.5/8, windowHeight*11/18, 160 );
 
 	} else 
 
-	//definisco una posizione e una dimensione per i due testi a seconda dell'orientamento dello schermo
+	//definisco le dimensione degli elementi per il telefono
+	//ne definisco due, che variano a seconda dell'orientamento dello schermo
 	
 	//verticale
 	if(windowWidth<windowHeight){
@@ -256,6 +273,13 @@ function gameInstructions(){
 
 //START GAME
 function touchStarted(){
+	
+	// messaggio di alert se si gioca da computer
+	if (windowWidth > 1000 && windowHeight > 500){
+	mode=2
+
+	} else
+
 	mode=1
 
 	paragraphs = selectAll("p")
