@@ -136,27 +136,38 @@ function draw() {
 		cnv= createCanvas(windowWidth, windowHeight);
 		background("black")
 		
-			gameInstructions()
-			gameTitle()
+		gameTitle()
+		gameInstructions()
+			
 	}
 
 	//ALERT COMPUTER
 	if (mode== 2){
 
+		push()
 		cnv= createCanvas(windowWidth, windowHeight);
 		background("black")
 
-		alert1 = createP("Oh no! Seems you are trying to access the game from your computer")
-		alert2 = createP("open the link from your phone to play")
+		alert1 = createP("Oh no! :(")
+		alert2 = createP("Seems you are trying to access the game from your computer.")
+		alert3 = createP("Open the link from your phone to play!")
 		
-		alert1.position(0, windowHeight*8/18)
-		alert2.position(0, windowHeight*9/18)
+		alert1.position(0, windowHeight*7/18)
+		alert2.position(0, windowHeight*9.2/18)
+		alert3.position(0, windowHeight*10/18)
+
+		alert1.style('font-size', '40px')
+		alert2.style('font-size', '20px')
+		alert3.style('font-size', '20px')
+
+		noLoop()
+
+		pop()
 	}
 
 
 	//SCHERMATA DI GIOCO
 	else if(mode== 1){ 
-
 		
 		frameRate(60)
 
@@ -307,6 +318,7 @@ function gameTitle(){
 }
 
 function gameInstructions(){
+	
 	let instruction1= createP("tap the screen to start")
 	let instruction2= createP("rotate to draw")
 	let instruction3= createP("shake to save your work")
@@ -323,6 +335,7 @@ function gameInstructions(){
 		instruction2.position(0, windowHeight*13.5/18)
 		instruction3.position(0, windowHeight*14.5/18)
 	}
+
 }
 
 
