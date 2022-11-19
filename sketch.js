@@ -182,6 +182,15 @@ function gameTitle(){
 	
 	frameRate(3)
 
+	console.log(deviceOrientation)
+
+	if (windowWidth > 1000 && windowHeight > 500){
+		pointsDr = font.textToPoints('DRAWING', windowWidth*2/8, windowHeight*7/18, 160);
+		pointsAr = font.textToPoints('ARENA',  windowWidth*2.5/8, windowHeight*11/18, 160 );
+		console.log("computer")
+
+	} else 
+
 	//definisco una posizione e una dimensione per i due testi a seconda dell'orientamento dello schermo
 	
 	//verticale
@@ -226,6 +235,7 @@ function gameTitle(){
 
 	pop()
 }
+
 
 function gameInstructions(){
 	let instruction1= createP("tap the screen to start")
