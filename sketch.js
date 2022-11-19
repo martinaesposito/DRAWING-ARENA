@@ -12,10 +12,11 @@ let paragraphs= []
 let pointsDr 
 let pointsAr
 
+//COMPUTER ALERT
+let alert1
+let alert2
+
 //SCHERMATA DI GIOCO
-
-let alert
-
 let worldbounds
 let xB
 let yB
@@ -33,6 +34,61 @@ let trail = []
 let shakeSound
 
 
+
+
+
+//CLASSI
+
+//definisco la classe che corrisponderà al mio player e alle palline in giro per lo schermo
+class colorBall{
+	constructor(x, y, r, c) {
+	//definisco la posizione con un vettore
+	this.pos = new p5.Vector(x, y);
+	this.r = r;
+	this.c= c;
+	}
+  
+	update() {
+		//definisco due variabili associate alla rtoazione dello schermo
+		let rX= constrain(rotationY,-30,30)
+		let rY= constrain(rotationX,-30,30)
+
+		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -5 e 5
+		let dX= map(rX,-30, 30,-5, 5);
+		let dY= map(rY,-30, 30,-5, 5);
+		
+		//genero un vettore con questi nuovi valori
+		let dir = createVector(dX, dY);
+		//lo sommo al vettore posizione associato al player
+		this.pos.add(dir);
+	}
+  
+	//metodo che fa interagire il player con le altre palline nella canvas
+	eats(other) {
+		//definisco una variabile corrispondente alla distanza tra i due cerchi
+	  let d = p5.Vector.dist(this.pos, other.pos);
+		//se la distanza è minore della somma dei due raggi (ossia si toccano)
+	  if (d < this.r /2 + other.r/2) {
+
+		//sommo le aree delle due circonferenze
+		var sum = PI * this.r * this.r + PI * other.r * other.r;
+		//assegno al nuovo cerchio la dimensioe del raggio della circonferenza risultante dalla somma delle due aree
+		this.r = sqrt(sum / PI);
+
+		this.c= other.c
+		
+		return true;
+	  } else {
+		return false;
+	  }
+	}
+
+	show() {
+		fill(this.c);
+		ellipse(this.pos.x, this.pos.y, this.r, this.r );
+	  }
+  }
+ 
 
 
 
@@ -84,18 +140,21 @@ function draw() {
 			gameTitle()
 	}
 
-	//SCHERMATA DI GIOCO
+	//ALERT COMPUTER
 	if (mode== 2){
 
 		cnv= createCanvas(windowWidth, windowHeight);
 		background("black")
 
-		let alert1 = createP("Oh no! Seems you are trying to access the game from your computer")
-		let alert2 = createP("open the link from your phone to play")
+		alert1 = createP("Oh no! Seems you are trying to access the game from your computer")
+		alert2 = createP("open the link from your phone to play")
 		
 		alert1.position(0, windowHeight*8/18)
 		alert2.position(0, windowHeight*9/18)
 	}
+
+
+	//SCHERMATA DI GIOCO
 	else if(mode== 1){ 
 
 		
@@ -185,10 +244,7 @@ function draw() {
 		worldbounds= rect(-width*4,-height*4, width*8, height*8)
 		
 		pop()
-
 }	
-
-
   
 
 //LANDING PAGE 
@@ -250,7 +306,6 @@ function gameTitle(){
 	pop()
 }
 
-
 function gameInstructions(){
 	let instruction1= createP("tap the screen to start")
 	let instruction2= createP("rotate to draw")
@@ -296,63 +351,6 @@ function deviceShaken() {
 	artwork.save("draw", 'png')
 }
 
-
-
-
-
-
-//CLASSI
-
-//definisco la classe che corrisponderà al mio player e alle palline in giro per lo schermo
-class colorBall{
-	constructor(x, y, r, c) {
-	//definisco la posizione con un vettore
-	this.pos = new p5.Vector(x, y);
-	this.r = r;
-	this.c= c;
-	}
-  
-	update() {
-		//definisco due variabili associate alla rtoazione dello schermo
-		let rX= constrain(rotationY,-30,30)
-		let rY= constrain(rotationX,-30,30)
-
-		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -5 e 5
-		let dX= map(rX,-30, 30,-5, 5);
-		let dY= map(rY,-30, 30,-5, 5);
-		
-		//genero un vettore con questi nuovi valori
-		let dir = createVector(dX, dY);
-		//lo sommo al vettore posizione associato al player
-		this.pos.add(dir);
-	}
-  
-	//metodo che fa interagire il player con le altre palline nella canvas
-	eats(other) {
-		//definisco una variabile corrispondente alla distanza tra i due cerchi
-	  let d = p5.Vector.dist(this.pos, other.pos);
-		//se la distanza è minore della somma dei due raggi (ossia si toccano)
-	  if (d < this.r /2 + other.r/2) {
-
-		//sommo le aree delle due circonferenze
-		var sum = PI * this.r * this.r + PI * other.r * other.r;
-		//assegno al nuovo cerchio la dimensioe del raggio della circonferenza risultante dalla somma delle due aree
-		this.r = sqrt(sum / PI);
-
-		this.c= other.c
-		
-		return true;
-	  } else {
-		return false;
-	  }
-	}
-
-	show() {
-		fill(this.c);
-		ellipse(this.pos.x, this.pos.y, this.r, this.r );
-	  }
-  }
- 
 
 
 
