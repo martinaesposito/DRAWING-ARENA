@@ -129,6 +129,7 @@ function setup() {
 
 
 function draw() {
+	clear()
 
 	//LANDING PAGE
 	if (mode== 0){
@@ -368,3 +369,4 @@ function deviceShaken() {
 //https://thecodingtrain.com/challenges/32-agario - Agar.io, Daniel Shiffman
 //https://thecodingtrain.com/challenges/59-steering-behaviors - Steering Behaviors, Daniel Shiffman
 //https://www.youtube.com/watch?v=AbB9ayaffTc&list=PLG5HuBbpokzX3bgbBjlt4GE_C5HF3t0dr&index=65&ab_channel=designersdocode - Device Motion, designersdocode
+//https://www.youtube.com/watch?v=TgHhEzKlLb4&ab_channel=MagicMonk - Start Menu, Magic Monk
