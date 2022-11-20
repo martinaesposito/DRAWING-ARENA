@@ -400,6 +400,7 @@ function deviceShaken() {
 	artwork.save("draw", 'png')
 	
 	shakeSound.play();
+	shakeSound.stop(2.5);
 }
 
 
