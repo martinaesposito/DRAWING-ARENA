@@ -1,31 +1,39 @@
 //VARIABILI
 
-//definisco una variabile che mi fa passare dalla schermata iniziale a quella di gioco
+//variabile che mi fa passare dalla schermata iniziale a quella di gioco
 let mode
 
 let cnv
 
-//LANDING PAGE
-let start 
-let paragraphs= []
 
-let pointsDr 
-let pointsAr
+//LANDING PAGE
+let container
+let instruction1
+let	instruction2
+let	instruction3
+let paragraphs = []
+//scritta palline
+let pointsDr = []
+let pointsAr = []
+
 
 //COMPUTER ALERT
+let container2
 let alert1
 let alert2
+let alert3
+
 
 //SCHERMATA DI GIOCO
 let worldbounds
 let xB
 let yB
-
+//palline colorate
 let ballColor
 let rdmX
 let rdmY
 let colorBalls = []
-
+//player
 let player
 let point
 let trail = []
@@ -100,7 +108,6 @@ function preload(){
 }
 
 
-
 function setup() {
 	mode= 0;
 	cnv= createCanvas(windowWidth, windowHeight);
@@ -139,29 +146,17 @@ function draw() {
 		
 		gameTitle()
 		gameInstructions()
-			
 	}
 
 	//ALERT COMPUTER
-	if (mode== 2){
+	else if (mode== 2){
+		clear()
 
 		cnv= createCanvas(windowWidth, windowHeight);
 		background("black")
-
-		alert1 = createP("Oh no! :(")
-		alert2 = createP("Seems you are trying to access the game from your computer.")
-		alert3 = createP("Open the link from your phone to play!")
 		
-		alert1.position(0, windowHeight*7/18)
-		alert2.position(0, windowHeight*9.2/18)
-		alert3.position(0, windowHeight*10/18)
-
-		alert1.style('font-size', '40px')
-		alert2.style('font-size', '20px')
-		alert3.style('font-size', '20px')
-
+		computerAlert()
 	}
-
 
 	//SCHERMATA DI GIOCO
 	else if(mode== 1){ 
@@ -252,6 +247,7 @@ function draw() {
 		worldbounds= rect(-width*4,-height*4, width*8, height*8)
 		
 		pop()
+		
 }	
   
 
@@ -269,17 +265,16 @@ function gameTitle(){
 	} else 
 
 	//definisco le dimensione degli elementi per il telefono
-	//ne definisco due, che variano a seconda dell'orientamento dello schermo
 	
 	//verticale
 	if(windowWidth<windowHeight){
-	pointsDr = font.textToPoints('DRAWING', windowWidth/24, windowHeight*8/18, 85);
-	pointsAr = font.textToPoints('ARENA',  windowWidth/6, windowHeight*10/18, 85 );
+		pointsDr = font.textToPoints('DRAWING', windowWidth/24, windowHeight*8/18, 85);
+		pointsAr = font.textToPoints('ARENA',  windowWidth/6, windowHeight*10/18, 85 );
 
 	//orizzontale
 	} else if (windowWidth>windowHeight) {
-	pointsDr = font.textToPoints('DRAWING', windowWidth/6, windowHeight*2/6, 120);
-	pointsAr = font.textToPoints('ARENA', windowWidth/4, windowHeight*4/6, 120 );
+		pointsDr = font.textToPoints('DRAWING', windowWidth/6, windowHeight*2/6, 120);
+		pointsAr = font.textToPoints('ARENA', windowWidth/4, windowHeight*4/6, 120 );
 	}
 	
 	for (let i = 0; i < pointsDr.length; i++) {
@@ -297,7 +292,7 @@ function gameTitle(){
 		ellipse(pt.x, pt.y, r);
 	}
 
-		for (let i = 0; i < pointsAr.length; i++) {
+	for (let i = 0; i < pointsAr.length; i++) {
 		let pt = pointsAr[i];
 		let r= random(2,8)
 		noStroke()
@@ -314,25 +309,41 @@ function gameTitle(){
 	pop()
 }
 
+
 function gameInstructions(){
+	push()
+	container= createDiv()
+	container.style("width:100%; height: 70px;")
+	container.center()
 	
-	let instruction1= createP("tap the screen to start")
-	let instruction2= createP("rotate to draw")
-	let instruction3= createP("shake to save your work")
+	 instruction1= createP("tap the screen to start")
+	 instruction2= createP("rotate to draw")
+	 instruction3= createP("shake to save your work")
+
+	 instruction1.parent(container)
+	 instruction2.parent(container)
+	 instruction3.parent(container)
+
+	 if (windowWidth > 1000 && windowHeight > 500){
+
+		container.position(0, windowHeight*12.5/18)
+		container.style("height: 100px;")
+		instruction1.style('font-size', '20px')
+		instruction2.style('font-size', '20px')
+		instruction3.style('font-size', '20px')
+
+	} else 
 
 	//posizione dei p per lo schermo in verticale
-	if(windowWidth<windowHeight){
-		instruction1.position(0, windowHeight*12/18)
-		instruction2.position(0, windowHeight*12.5/18)
-		instruction3.position(0, windowHeight*13/18)
+	if (windowWidth<windowHeight){
+		container.position(0, windowHeight*12/18)
 
 	//posizione dei p per lo schermo in orizzontale
-		} else if (windowWidth>windowHeight) {
-		instruction1.position(0, windowHeight*12.5/18)
-		instruction2.position(0, windowHeight*13.5/18)
-		instruction3.position(0, windowHeight*14.5/18)
+	} else if (windowWidth>windowHeight) {
+		container.position(0, windowHeight*13.5/18)
+		container.style("height: 50px;")
 	}
-
+	pop()
 }
 
 
@@ -341,23 +352,47 @@ function touchStarted(){
 	
 	// messaggio di alert se si gioca da computer
 	if (windowWidth > 1000 && windowHeight > 500){
-	mode=2
-
+		mode=2
 	} else
+		mode=1
+		paragraphs = selectAll("p")
+		paragraphs.forEach(function(p){
+			p.hide()})
 
-	mode=1
-
-	paragraphs = selectAll("p")
-	paragraphs.forEach(function(p){
-		p.hide()})
+		containers = selectAll("div")
+		containers.forEach(function(d){
+			d.hide()})
 }
+
+
+//COMPUTER ALERT
+function computerAlert(){
+	push()
+	container2= createDiv()
+	container2.style("width:100%; height: 150px;")
+	container2.center()
+
+	alert1 = createP("Oh no! :(")
+	alert2 = createP("Seems you are trying to access the game from your computer.")
+	alert3 = createP("Open the link from your phone to play!")
+
+	container2.position(0, windowHeight*7/18)
+
+	alert1.parent(container2)
+	alert1.style('font-size:40px; margin-bottom:20px;')
+
+	alert2.parent(container2)
+	alert3.parent(container2)
+	alert2.style('font-size', '20px')
+	alert3.style('font-size', '20px')
+	pop()
+}
+
 
 
 //SAVE IMAGE
 function deviceShaken() {
-
 	let artwork= createImage(width*2,height*2)
-
 	artwork.save("draw", 'png')
 }
 
