@@ -5,7 +5,6 @@ let mode
 
 let cnv
 
-
 //LANDING PAGE
 let container
 let instruction1
@@ -57,7 +56,7 @@ class colorBall{
 	}
   
 	update() {
-		//definisco due variabili associate alla rtoazione dello schermo
+		//definisco due variabili associate alla rotazione dello schermo
 		let rX= constrain(rotationY,-30,30)
 		let rY= constrain(rotationX,-30,30)
 
@@ -244,7 +243,7 @@ function draw() {
 		noFill()
 		strokeWeight(10)
 		stroke(255)
-		worldbounds= rect(-width*4,-height*4, width*8, height*8)
+		worldbounds= rect(-xB,-yB, width*8, height*8)
 		
 		pop()
 		
