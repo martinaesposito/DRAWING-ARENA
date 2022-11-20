@@ -57,12 +57,13 @@ class colorBall{
   
 	update() {
 		//definisco due variabili associate alla rotazione dello schermo
+		//limito il valore dell'angolo di rotazione perchè
 		let rX= constrain(rotationY,-30,30)
-		let rY= constrain(rotationX,-30,30)
+		let rY= constrain(rotationX,-60,60)
 
 		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -5 e 5
-		let dX= map(rX,-30, 30,-5, 5);
-		let dY= map(rY,-30, 30,-5, 5);
+		let dX= map(rX,-30, 30,-6, 6);
+		let dY= map(rY,-30, 30,-6, 6);
 		
 		//genero un vettore con questi nuovi valori
 		let dir = createVector(dX, dY);
@@ -103,6 +104,8 @@ class colorBall{
 //FUNZIONI
 
 function preload(){
+	
+	shakeSound= loadSound('assets/sounds/shake.ogg')
 	font = loadFont('assets/fonts/Roboto/Roboto-Medium.ttf')
 }
 
@@ -226,7 +229,7 @@ function draw() {
 			}
 		}
 
-		//impongo al player di non poter ai confini del mondo che ho definito
+		//impongo al player di non poter superare i confini del mondo che ho definito
 		if ( player.pos.x <= -(xB - player.r/2) ) {
 			player.pos.x= -(xB - player.r/2)
 		} else if ( player.pos.x >= (xB - player.r/2) ) {
@@ -276,6 +279,7 @@ function gameTitle(){
 		pointsAr = font.textToPoints('ARENA', windowWidth/4, windowHeight*4/6, 120 );
 	}
 	
+	//disegno una serie di ellissi per ciascun punto dei due array corrispondenti ai due testi
 	for (let i = 0; i < pointsDr.length; i++) {
 		let pt = pointsDr[i];
 		
@@ -352,6 +356,7 @@ function touchStarted(){
 	// messaggio di alert se si gioca da computer
 	if (windowWidth > 1000 && windowHeight > 500){
 		mode=2
+		
 	} else
 		mode=1
 		paragraphs = selectAll("p")
@@ -393,6 +398,8 @@ function computerAlert(){
 function deviceShaken() {
 	let artwork= createImage(width*2,height*2)
 	artwork.save("draw", 'png')
+	
+	shakeSound.play();
 }
 
 
