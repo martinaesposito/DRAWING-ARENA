@@ -37,9 +37,6 @@ let player
 let point
 let trail = []
 
-//ASSETS
-let shakeSound
-
 
 
 
@@ -105,7 +102,6 @@ class colorBall{
 
 function preload(){
 	
-	shakeSound= loadSound('assets/sounds/shake.ogg')
 	font = loadFont('assets/fonts/Roboto/Roboto-Medium.ttf')
 }
 
@@ -114,7 +110,7 @@ function setup() {
 	mode= 0;
 	cnv= createCanvas(windowWidth, windowHeight);
 	ellipseMode(CENTER);
-	setShakeThreshold(30)
+	setShakeThreshold(40)
 
 	//creo le palline
 	for (var i = 0; i < 200; i++) {
@@ -189,7 +185,7 @@ function draw() {
 				colorBalls.splice(i, 1);
 			}
 
-			//se le palline diventano meno di 80 allora viene creata un'altra pallina
+			//quando le palline diventano 80 ne viene creata un'altra
 			if (colorBalls.length== 80){
 				R= random(0,255)
 				G= random(0,255)
@@ -315,6 +311,7 @@ function gameTitle(){
 
 function gameInstructions(){
 	push()
+	//definisco un div centrale rispetto allo schermo in cui inserisco i tre paragrafi di istruzione
 	container= createDiv()
 	container.style("width:100%; height: 70px;")
 	container.center()
@@ -327,6 +324,7 @@ function gameInstructions(){
 	 instruction2.parent(container)
 	 instruction3.parent(container)
 
+	 //definisco le posizioni e le dimensioni del testo per il computer
 	 if (windowWidth > 1000 && windowHeight > 500){
 
 		container.position(0, windowHeight*12.5/18)
@@ -337,11 +335,12 @@ function gameInstructions(){
 
 	} else 
 
-	//posizione dei p per lo schermo in verticale
+	//definisco la posizione del div per il telefono
+	//se lo schermo è in verticale
 	if (windowWidth<windowHeight){
 		container.position(0, windowHeight*12/18)
 
-	//posizione dei p per lo schermo in orizzontale
+	//se lo schermo è in orizzontale
 	} else if (windowWidth>windowHeight) {
 		container.position(0, windowHeight*13.5/18)
 		container.style("height: 50px;")
@@ -398,9 +397,6 @@ function computerAlert(){
 function deviceShaken() {
 	let artwork= createImage(width*2,height*2)
 	artwork.save("draw", 'png')
-	
-	shakeSound.play();
-	shakeSound.stop(1);
 }
 
 
