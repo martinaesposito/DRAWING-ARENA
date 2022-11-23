@@ -60,7 +60,7 @@ class colorBall{
 
 		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -5 e 5
 		let dX= map(rX,-30, 30,-6, 6);
-		let dY= map(rY,-30, 30,-6, 6);
+		let dY= map(rY,-60, 60,-6, 6);
 		
 		//genero un vettore con questi nuovi valori
 		let dir = createVector(dX, dY);
@@ -101,7 +101,6 @@ class colorBall{
 //FUNZIONI
 
 function preload(){
-	
 	font = loadFont('assets/fonts/Roboto/Roboto-Medium.ttf')
 }
 
