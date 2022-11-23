@@ -3,7 +3,9 @@
 //variabile che mi fa passare dalla schermata iniziale a quella di gioco
 let mode
 
+//variabile associata alla canvas e all'artwork realizzato dallo user
 let cnv
+let artwork
 
 //START MENU
 //definisco il div e i p che compariranno nello start menu
@@ -111,7 +113,8 @@ function preload(){
 
 
 function setup() {
-	mode= 0;
+	mode= false; //la modalità di gioco è disattivata 
+
 	cnv= createCanvas(windowWidth, windowHeight);
 	ellipseMode(CENTER);
 	setShakeThreshold(40)
@@ -141,7 +144,7 @@ function draw() {
 	clear()
 
 	//LANDING PAGE
-	if (mode== 0){
+	if (mode== false){
 
 		cnv= createCanvas(windowWidth, windowHeight);
 		background("black")
@@ -151,7 +154,7 @@ function draw() {
 	}
 
 	//SCHERMATA DI GIOCO
-	else if(mode== 1){ 
+	else if(mode== true){ 
 		
 		frameRate(60)
 
@@ -225,13 +228,13 @@ function draw() {
 		}
 
 		//impongo al player di non poter superare i confini del mondo che ho definito
-		if ( player.pos.x <= -(xB - player.r/2) ) {
+		if ( player.pos.x < -(xB - player.r/2) ) {
 			player.pos.x= -(xB - player.r/2)
-		} else if ( player.pos.x >= (xB - player.r/2) ) {
+		} else if ( player.pos.x > (xB - player.r/2) ) {
 			player.pos.x= (xB - player.r/2)
-		} else if ( player.pos.y <= -(yB - player.r/2) ) {
+		} else if ( player.pos.y < -(yB - player.r/2) ) {
 			player.pos.y= -(yB - player.r/2)
-		} else if ( player.pos.y >= (yB - player.r/2) ) {
+		} else if ( player.pos.y > (yB - player.r/2) ) {
 			player.pos.y= (yB - player.r/2)
 		}
 
@@ -337,12 +340,10 @@ function gameInstructions(){
 	} else 
 
 	//definisco la posizione del div per il telefono
-	//se lo schermo è in verticale
-	if (windowWidth<windowHeight){
+	if (windowWidth<windowHeight){ //portrait
 		container.position(0, windowHeight*12/18)
 
-	//se lo schermo è in orizzontale
-	} else if (windowWidth>windowHeight) {
+	} else if (windowWidth>windowHeight) { //landscape
 		container.position(0, windowHeight*13.5/18)
 		container.style("height: 50px;")
 	}
@@ -352,6 +353,7 @@ function gameInstructions(){
 
 //START GAME
 function touchStarted(){
+	mode=true // si attiva la modalità di gioco
 
 		paragraphs = selectAll("p")
 		paragraphs.forEach(function(p){
@@ -360,21 +362,17 @@ function touchStarted(){
 		containers = selectAll("div")
 		containers.forEach(function(d){
 			d.hide()})
-		
-		mode=1 
 }
 
 
 //SAVE IMAGE
 function deviceShaken() {
-	let artwork= createImage(width*2,height*2)
-	artwork.save("draw", 'png')
+	artwork= saveCanvas(cnv, 'artwork', 'png')
 }
 
 function keyPressed() {
 	if  (keyCode === 32){ // spacebar
-	let artwork= createImage(width*2,height*2)
-	artwork.save("draw", 'png')
+		artwork= saveCanvas(cnv, 'artwork', 'png')
 	}
 }
 
