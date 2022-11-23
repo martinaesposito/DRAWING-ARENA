@@ -52,13 +52,12 @@ class colorBall{
 	this.c= c;
 	}
   
-	update() {
+	updatePhone() {
 		//definisco due variabili associate alla rotazione dello schermo
-		//limito il valore dell'angolo di rotazione perchè
 		let rX= constrain(rotationY,-30,30)
 		let rY= constrain(rotationX,-60,60)
 
-		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -5 e 5
+		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -6 e +6
 		let dX= map(rX,-30, 30,-6, 6);
 		let dY= map(rY,-60, 60,-6, 6);
 		
@@ -68,6 +67,17 @@ class colorBall{
 		this.pos.add(dir);
 	}
   
+	updateDesktop(){	
+	//definisco due variabili associate alla posizione del mouse
+	let dX= map(mouseX,0, width,-10, +10);
+	let dY= map(mouseY,0, height,-10, +10);
+	
+	//genero un vettore con questi nuovi valori
+	let dir = createVector(dX, dY);
+	//lo sommo al vettore posizione associato al player
+	this.pos.add(dir);
+	}
+	
 	//metodo che fa interagire il player con le altre palline nella canvas
 	eats(other) {
 		//definisco una variabile corrispondente alla distanza tra i due cerchi
@@ -145,16 +155,6 @@ function draw() {
 		gameInstructions()
 	}
 
-	//ALERT COMPUTER
-	else if (mode== 2){
-		clear()
-
-		cnv= createCanvas(windowWidth, windowHeight);
-		background("black")
-		
-		computerAlert()
-	}
-
 	//SCHERMATA DI GIOCO
 	else if(mode== 1){ 
 		
@@ -174,7 +174,12 @@ function draw() {
 
 		//creo il player
 		player.show();
-		player.update();
+
+		if (windowWidth > 1000 && windowHeight > 500){
+			player.updateDesktop();
+		} else 
+
+		player.updatePhone();
 		
 		//faccio comparire le palline generate nel setup
 		for (var i = colorBalls.length - 1; i >= 0; i--) {
@@ -329,8 +334,8 @@ function gameInstructions(){
 		container.position(0, windowHeight*12.5/18)
 		container.style("height: 100px;")
 		instruction1.style('font-size', '20px')
-		instruction2.style('font-size', '20px')
-		instruction3.style('font-size', '20px')
+		instruction2.hide()
+		instruction3.hide()
 
 	} else 
 
@@ -350,13 +355,7 @@ function gameInstructions(){
 
 //START GAME
 function touchStarted(){
-	
-	// messaggio di alert se si gioca da computer
-	if (windowWidth > 1000 && windowHeight > 500){
-		mode=2
-		
-	} else
-		mode=1
+
 		paragraphs = selectAll("p")
 		paragraphs.forEach(function(p){
 			p.hide()})
@@ -364,32 +363,9 @@ function touchStarted(){
 		containers = selectAll("div")
 		containers.forEach(function(d){
 			d.hide()})
+		
+		mode=1 
 }
-
-
-//COMPUTER ALERT
-function computerAlert(){
-	push()
-	container2= createDiv()
-	container2.style("width:100%; height: 150px;")
-	container2.center()
-
-	alert1 = createP("Oh no! :(")
-	alert2 = createP("Seems you are trying to access the game from your computer.")
-	alert3 = createP("Open the link from your phone to play!")
-
-	container2.position(0, windowHeight*7/18)
-
-	alert1.parent(container2)
-	alert1.style('font-size:40px; margin-bottom:20px;')
-
-	alert2.parent(container2)
-	alert3.parent(container2)
-	alert2.style('font-size', '20px')
-	alert3.style('font-size', '20px')
-	pop()
-}
-
 
 
 //SAVE IMAGE
@@ -397,6 +373,14 @@ function deviceShaken() {
 	let artwork= createImage(width*2,height*2)
 	artwork.save("draw", 'png')
 }
+
+function keyPressed() {
+	if  (keyCode === 32){ // spacebar
+	let artwork= createImage(width*2,height*2)
+	artwork.save("draw", 'png')
+	}
+}
+
 
 
 
@@ -407,3 +391,5 @@ function deviceShaken() {
 //https://thecodingtrain.com/challenges/59-steering-behaviors - Steering Behaviors, Daniel Shiffman
 //https://www.youtube.com/watch?v=AbB9ayaffTc&list=PLG5HuBbpokzX3bgbBjlt4GE_C5HF3t0dr&index=65&ab_channel=designersdocode - Device Motion, designersdocode
 //https://www.youtube.com/watch?v=TgHhEzKlLb4&ab_channel=MagicMonk - Start Menu, Magic Monk
+
+
