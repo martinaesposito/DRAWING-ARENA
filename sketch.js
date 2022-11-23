@@ -334,8 +334,10 @@ function gameInstructions(){
 		container.position(0, windowHeight*12.5/18)
 		container.style("height: 100px;")
 		instruction1.style('font-size', '20px')
-		instruction2.hide()
-		instruction3.hide()
+		instruction2.html("move the mouse to draw")
+		instruction2.style('font-size', '20px')
+		instruction3.html("press the spacebar to save your work")
+		instruction3.style('font-size', '20px')
 
 	} else 
 
