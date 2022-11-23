@@ -227,7 +227,8 @@ function draw() {
 			}
 		}
 
-		//impongo al player di non poter superare i confini del mondo che ho definito
+		//impongo al player di non poter superare i confini del mondo
+		//alla dimensione associata ai confini sotttraggo il raggio della pallina
 		if ( player.pos.x < -(xB - player.r/2) ) {
 			player.pos.x= -(xB - player.r/2)
 		} else if ( player.pos.x > (xB - player.r/2) ) {
@@ -254,25 +255,20 @@ function draw() {
 //START MENU 
 function gameTitle(){
 	push()
-	
 	frameRate(3)
 
-	//definisco una dimensione degli elementi per lo schermo del computer
-	if (windowWidth > 1000 && windowHeight > 500){
+	if (windowWidth > 1000 && windowHeight > 500){	//desktop
 		pointsDr = font.textToPoints('DRAWING', windowWidth*2/8, windowHeight*7/18, 160);
 		pointsAr = font.textToPoints('ARENA',  windowWidth*2.5/8, windowHeight*11/18, 160 );
 
 	} else 
 
-	//definisco le dimensione degli elementi per il telefono
-	
-	//verticale
-	if(windowWidth<windowHeight){
+	//telefono
+	if(windowWidth<windowHeight){	//verticale
 		pointsDr = font.textToPoints('DRAWING', windowWidth/24, windowHeight*8/18, 85);
 		pointsAr = font.textToPoints('ARENA',  windowWidth/6, windowHeight*10/18, 85 );
 
-	//orizzontale
-	} else if (windowWidth>windowHeight) {
+	} else if (windowWidth>windowHeight) {	//orizzontale
 		pointsDr = font.textToPoints('DRAWING', windowWidth/6, windowHeight*2/6, 120);
 		pointsAr = font.textToPoints('ARENA', windowWidth/4, windowHeight*4/6, 120 );
 	}
@@ -306,7 +302,6 @@ function gameTitle(){
 		fill(rdmColor)
 		ellipse(pt.x, pt.y, r);
 	}
-
 	pop()
 }
 
@@ -326,8 +321,7 @@ function gameInstructions(){
 	 instruction2.parent(container)
 	 instruction3.parent(container)
 
-	 //definisco le posizioni e le dimensioni del testo per il computer
-	 if (windowWidth > 1000 && windowHeight > 500){
+	 if (windowWidth > 1000 && windowHeight > 500){ //desktop
 
 		container.position(0, windowHeight*12.5/18)
 		container.style("height: 100px;")
