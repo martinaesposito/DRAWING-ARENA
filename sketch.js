@@ -251,7 +251,7 @@ function draw() {
 }	
   
 
-//LANDING PAGE 
+//START MENU 
 function gameTitle(){
 	push()
 	
