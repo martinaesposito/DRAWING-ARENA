@@ -5,7 +5,8 @@ let mode
 
 let cnv
 
-//LANDING PAGE
+//START MENU
+//definisco il div e i p che compariranno nello start menu
 let container
 let instruction1
 let	instruction2
@@ -14,13 +15,6 @@ let paragraphs = []
 //scritta palline
 let pointsDr = []
 let pointsAr = []
-
-
-//COMPUTER ALERT
-let container2
-let alert1
-let alert2
-let alert3
 
 
 //SCHERMATA DI GIOCO
@@ -46,18 +40,18 @@ let trail = []
 //definisco la classe che corrisponderà al mio player e alle palline in giro per lo schermo
 class colorBall{
 	constructor(x, y, r, c) {
-	//definisco la posizione con un vettore
-	this.pos = new p5.Vector(x, y);
+	this.pos = new p5.Vector(x, y); //definisco la posizione con un vettore
 	this.r = r;
 	this.c= c;
 	}
   
-	updatePhone() {
-		//definisco due variabili associate alla rotazione dello schermo
+	//metodo che aggiorna lo spostamento della pallina
+	updatePhone() { //per telefono
+		//definisco due variabili associate alla rotazione dello schermo, limitando il range in cui questo valore viene campionato
 		let rX= constrain(rotationY,-30,30)
 		let rY= constrain(rotationX,-60,60)
 
-		//rimappo il valore delle variabili in modo che assuma un valore compreso tra -6 e +6
+		//rimappo il valore della rotazione in modo che sia compreso tra -6 e +6
 		let dX= map(rX,-30, 30,-6, 6);
 		let dY= map(rY,-60, 60,-6, 6);
 		
@@ -67,8 +61,9 @@ class colorBall{
 		this.pos.add(dir);
 	}
   
-	updateDesktop(){	
+	updateDesktop(){ //per desktop
 	//definisco due variabili associate alla posizione del mouse
+	//rimappo questo valore in modo che sia un numero compreso tra -10 e +10
 	let dX= map(mouseX,0, width,-10, +10);
 	let dY= map(mouseY,0, height,-10, +10);
 	
@@ -78,12 +73,12 @@ class colorBall{
 	this.pos.add(dir);
 	}
 	
-	//metodo che fa interagire il player con le altre palline nella canvas
-	eats(other) {
-		//definisco una variabile corrispondente alla distanza tra i due cerchi
-	  let d = p5.Vector.dist(this.pos, other.pos);
-		//se la distanza è minore della somma dei due raggi (ossia si toccano)
-	  if (d < this.r /2 + other.r/2) {
+	
+	eats(other) { //metodo che fa interagire il player con le altre palline nella canvas
+	//parametro della funzione = un'altra delle palline disegnate nella canvas
+	
+	  let d = p5.Vector.dist(this.pos, other.pos);	//variabile corrispondente alla distanza tra i due cerchi
+	  if (d < this.r /2 + other.r/2) { 	//se la distanza è minore della somma dei due raggi (ossia si toccano)
 
 		//sommo le aree delle due circonferenze
 		var sum = PI * this.r * this.r + PI * other.r * other.r;
